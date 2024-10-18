@@ -98,14 +98,14 @@ class DbService{
    }
 
 
-   async insertNewUser(username,firstname,lastname,salary,age){
+   async insertNewUser(username,password,firstname,lastname,salary,age){
          try{
             const dateAdded = new Date();
             // use await to call an asynchronous function
             const insertId = await new Promise((resolve, reject) => 
             {
-               const query = "INSERT INTO Users (userid, firstname, lastname, salary, age, registerDay) VALUES (?, ?, ?, ?, ?, ?);";
-               connection.query(query, [username, firstname, lastname, salary, age, dateAdded], (err, result) => {
+               const query = "INSERT INTO Users (userid, password, firstname, lastname, salary, age, registerDay) VALUES (?, ?, ?, ?, ?, ?,?);";
+               connection.query(query, [username, password, firstname, lastname, salary, age, dateAdded], (err, result) => {
                    if(err) reject(new Error(err.message));
                    else resolve(result.insertId);
                });
@@ -114,6 +114,7 @@ class DbService{
 
             return{
                username: username,
+               password: password,
                firstname: firstname,
                lastname: lastname,
                salary: salary,
@@ -135,8 +136,8 @@ class DbService{
              // use await to call an asynchronous function
              const response = await new Promise((resolve, reject) => 
                   {
-                     const query = "SELECT * FROM Users WHERE firstname = ? OR lastname = ?;";
-                     connection.query(query, [name,name], (err, results) => {
+                     const query = "SELECT * FROM Users WHERE firstname = ? OR lastname = ? OR userid = ?;";
+                     connection.query(query, [name,name,name], (err, results) => {
                          if(err) reject(new Error(err.message));
                          else resolve(results);
                      });
@@ -157,7 +158,7 @@ class DbService{
               // use await to call an asynchronous function
               const response = await new Promise((resolve, reject) => 
                   {
-                     const query = "DELETE FROM names WHERE id = ?;";
+                     const query = "DELETE FROM Users WHERE id = ?;";
                      connection.query(query, [id], (err, result) => {
                           if(err) reject(new Error(err.message));
                           else resolve(result.affectedRows);

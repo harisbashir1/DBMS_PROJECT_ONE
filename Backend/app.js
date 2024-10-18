@@ -19,12 +19,12 @@ app.use(express.urlencoded({extended: false}));
 app.post('/insert', (request, response) => {
     console.log("app: insert a row.");
     console.log(request.body); 
-    const {username, firstname, lastname, salary, age} = request.body;
+    const {username, password, firstname, lastname, salary, age} = request.body;
 
 
     const db = dbService.getDbServiceInstance();
 
-    const result = db.insertNewUser(username, firstname, lastname, salary, age);
+    const result = db.insertNewUser(username,password, firstname, lastname, salary, age);
  
     // note that result is a promise
     result 

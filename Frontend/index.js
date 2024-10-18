@@ -78,6 +78,7 @@ addBtn.onclick = function (){
 
     const usernameInput = document.querySelector('#username-input');
     const firstnameInput = document.querySelector('#firstname-input');
+    const passwordInput = document.querySelector('#password-input')
     const lastnameInput = document.querySelector('#lastname-input');
     const salaryInput = document.querySelector('#salary-input');
     const ageInput = document.querySelector('#age-input');
@@ -85,6 +86,7 @@ addBtn.onclick = function (){
 
     const username = usernameInput.value;
     const firstname= firstnameInput.value;
+    const password = passwordInput.value;
     const lastname = lastnameInput.value;
     const salary = salaryInput.value;
     const age = ageInput.value;
@@ -93,6 +95,7 @@ addBtn.onclick = function (){
 
     usernameInput.value = "";
     firstnameInput.value = "";
+    passwordInput.value = "";
     lastnameInput.value = "";
     salaryInput.value = "";
     ageInput.value = "";
@@ -103,7 +106,7 @@ addBtn.onclick = function (){
             'Content-type': 'application/json'
         },
         method: 'POST',
-        body: JSON.stringify({username: username, firstname: firstname, lastname: lastname, salary: salary, age: age})
+        body: JSON.stringify({username: username, password:password, firstname: firstname, lastname: lastname, salary: salary, age: age})
     })
     .then(response => response.json())
     .then(data => insertRowIntoTable(data['data']));
@@ -297,9 +300,10 @@ function loadHTMLTable(data){
     data array.
     */
     let tableHtml = "";
-    data.forEach(function ({userid, firstname, lastname, salary, age, registerday,id}){
+    data.forEach(function ({userid,password, firstname, lastname, salary, age, registerday,id}){
          tableHtml += "<tr>";
          tableHtml +=`<td>${userid}</td>`;
+         tableHtml +=`<td>${password}</td>`;
          tableHtml +=`<td>${firstname}</td>`;
          tableHtml +=`<td>${lastname}</td>`;
          tableHtml +=`<td>${salary}</td>`;
